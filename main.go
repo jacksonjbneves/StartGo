@@ -5,7 +5,10 @@ package main
 //import "net/http"
 
 //Trata os valores da String e mostra os erros que surgirem
-import "fmt"
+import (
+	"fmt"
+	"time"
+)
 
 /*
 //Função soma
@@ -34,31 +37,48 @@ type Empresas struct { //1º letra Maiúscula Pública, Minúscula Privada
 	idade int
 }
 
-//Metodo da Empresas
+// Metodo da Empresas
 func (e Empresas) getFullInfo() string { //aqui esta privada a 1º letra nome do metodo
 	return fmt.Sprintf("Metodo --> Empresa: %s, CNPJ: %d, Email: %s, Idade: %d", e.nome, e.cnpj, e.email, e.idade)
 }
 
-func main() {
-	//parece construtor mas não é
-	estrutura := NomeDoStruct{ //declarando os valores das variaveis com dois pontos(:)
-		nome: "jackson", email: "j@email", idade: 31,
+// Metodo --> for/Sleep
+func counter() {
+	for i := 0; i < 10; i++ {
+		fmt.Println(i)
+		time.Sleep(time.Second)
 	}
-	//Imprimindo os valores das variaveis
-	fmt.Println("Nome:", estrutura.nome, "Email:", estrutura.email, "Idade:", estrutura.idade)
-	//Adicionar novo valor
-	estrutura.nome = "Jackson Neves"
+}
 
-	//Empresa
-	dadosEmp := Empresas{"Jackson Business", 12345678919, "contact@jkbusiness.com", 25}
-	// Print dos valores do metodo
-	fmt.Println(dadosEmp.getFullInfo())
+func main() {
 
-	/* dadosEmp := Empresas{
-		nome: "Jackson Business", cnpj: 12345678919, email: "contact@jkbusiness.com", idade: 25,
-	} */
-	fmt.Println("Empresa:", dadosEmp.nome, "CNPJ:", dadosEmp.cnpj, "Email:", dadosEmp.email, "Idade:", dadosEmp.idade)
+	//Call counter()
+	fmt.Println("-----[Não Paralelo]-----")
+	counter() //  não paralelo
 
+	fmt.Println("-----[Paralelo]-----")
+	go counter() // Thered's(T1) -> paralelo
+	go counter() // Thered's(T2) -> paralelo
+	counter()
+
+	/*
+		//parece construtor mas não é
+		estrutura := NomeDoStruct{ //declarando os valores das variaveis com dois pontos(:)
+			nome: "jackson", email: "j@email", idade: 31,
+		}
+		//Imprimindo os valores das variaveis
+		fmt.Println("Nome:", estrutura.nome, "Email:", estrutura.email, "Idade:", estrutura.idade)
+		//Adicionar novo valor
+		estrutura.nome = "Jackson Neves"
+
+		//Empresa
+		dadosEmp := Empresas{"Jackson Business", 12345678919, "contact@jkbusiness.com", 25}
+		// Print dos valores do metodo
+		fmt.Println(dadosEmp.getFullInfo())
+
+		//dadosEmp := Empresas{ nome: "Jackson Business", cnpj: 12345678919, email: "contact@jkbusiness.com", idade: 25, }
+		fmt.Println("Empresa:", dadosEmp.nome, "CNPJ:", dadosEmp.cnpj, "Email:", dadosEmp.email, "Idade:", dadosEmp.idade)
+	*/
 }
 
 /* func main() {
